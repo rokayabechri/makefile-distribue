@@ -81,23 +81,37 @@ public class MakefileParser {
 						currentTarget.setCmd(strBuff.toString());
 						if (currentTarget != null
 								&& currentTarget.getName() != null) {
-							listTarget.add(currentTarget);
-							currentTarget = null;
+							if (!listTarget.contains(currentTarget)) {
+								listTarget.add(currentTarget);
+								currentTarget = null;
+							}
+
 						} else {
 							System.out
 									.println("La target actuelle n'avait pas ete creee !\n");
 						}
 						break;
 					case LF:
-					case DIESE:
+
 						// retour chariot donc on passe directement au byte
 						// suivant,
+						break;
+					case DIESE:
+						i++;
+						while (tabByte[i] != LF) {
+							i++;
+						}
 						break;
 					default:
 						// par defaut, c'est une cible, on parse jusqu'au
 						// prochain ":", puis on parse les dependances, en
 						// ignorant les SP et les HT eventuels jusqu'au prochain
 						// LF
+						if (currentTarget != null) {
+							if (!listTarget.contains(currentTarget)) {
+								listTarget.add(currentTarget);
+							}
+						}
 						currentTarget = new Target();
 						strBuff = new StringBuffer();
 						while (tabByte[i] != COLON) {
@@ -111,20 +125,20 @@ public class MakefileParser {
 						while (tabByte[i] != LF) {
 							strBuff = new StringBuffer();
 							while (tabByte[i] != SP && tabByte[i] != HT) {
-									if (tabByte[i] == LF) {
-										fin = true;
-										break;
-									}
-								
+								if (tabByte[i] == LF) {
+									fin = true;
+									break;
+								}
+
 								strBuff.append((char) tabByte[i]);
 								i++;
-							}
-							if (fin) {
-								break;
 							}
 							if (strBuff.length() > 0) {
 								currentTarget.getDependencies().add(
 										strBuff.toString());
+							}
+							if (fin) {
+								break;
 							}
 							i++;
 						}
