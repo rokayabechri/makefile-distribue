@@ -1,8 +1,11 @@
 package fr.ensimag.make.distrib.agent;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -15,7 +18,7 @@ public class MakeMeMake {
 	static private BufferedReader receiveFromServer;
 	static private PrintWriter sendToServer;
 	
-	static public void main(String[] args) throws IOException {
+	static public void main(String[] args) throws IOException, InterruptedException {
 		Boolean avoid = false;
 		Integer port = 0;
 		if (args == null || args.length < 1) {
@@ -58,6 +61,7 @@ public class MakeMeMake {
 					}
 				}
 			}
+			break;
 		}
 	}
 	
@@ -77,14 +81,41 @@ public class MakeMeMake {
 			sendToServer.println("OK");
 			
 			System.out.println("En attente de travail...");
-			String operation = receiveFromServer.readLine();
-			if (operation.equals("END")) {
+			String action = receiveFromServer.readLine();
+			
+			
+			if (action.equals("END")) {
 		        sendToServer.println("ACK END") ;
 		        return false;
 		       // receiveFromServer.close();
 		        //sendToServer.close();
 			} else {
-				System.out.println("Travail recu du serveur, action... Operation = " + operation);
+				System.out.println("Travail recu du serveur, action... Taille = " + action);
+				// ExecCommand.execute(operation);
+				System.out.println("Attente fichier...");
+				
+				int filesize = 2238520;
+				
+				// receive file
+				
+			    byte [] mybytearray  = new byte [filesize];
+			    InputStream is = socket.getInputStream();
+			    FileOutputStream fos = new FileOutputStream("lol.jpg");
+			    BufferedOutputStream bos = new BufferedOutputStream(fos);
+			    int bytesRead = is.read(mybytearray,0,mybytearray.length);
+			    int current = bytesRead;
+
+			    // thanks to A. Cádiz for the bug fix
+			    do {
+			       bytesRead =
+			          is.read(mybytearray, current, (mybytearray.length-current));
+			       if(bytesRead >= 0) current += bytesRead;
+			    } while(bytesRead > -1);
+
+			    bos.write(mybytearray, 0 , current);
+			    bos.flush();
+				
+				
 		        sendToServer.println("Travail fini !");
 		        return true;
 			}
