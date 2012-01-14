@@ -17,7 +17,6 @@ public class MakefileParser {
 	public final static byte COLON = 58; // colon = ":"
 	public final static byte DIESE = 35; // # = commentaire
 
-	@SuppressWarnings("null")
 	public static List<Rule> parse(String makefileName) {
 		FileInputStream fis;
 		FileChannel fc;
