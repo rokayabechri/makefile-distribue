@@ -30,7 +30,7 @@ public class Tests {
 		// on genere le mapping (nom de la dependance - nom des cibles qui en dependent)
 		Map<String, List<String>> mapDepTarget = Dependency.mapDepTarget(listRules, mapDepRdy);
 		
-		// on recupere la list des tasks faisables (ca vide la liste des rules au fur et a mesure)
+		// on recupere la list des tasks faisables
 		List<Rule> listTasks = Dependency.getListTasks(listRules, mapDepRdy);
 		
 		// on upgrade la listTasks, une fois qu'une task est finie
