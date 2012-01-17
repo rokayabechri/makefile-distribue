@@ -173,7 +173,7 @@ public class MakeMeMake {
 				String ok2 = receiveFromServer.readLine();
 				if (!ok2.equals("OK2"))
 					throw new Exception("Not OK2");
-		        sendToServer.println("Fichier " + targetName + "realise !");
+		        sendToServer.println(targetName);
 		        return true;
 			}
 		} else {
