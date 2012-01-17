@@ -25,8 +25,8 @@ public class AgentListener extends Thread implements Runnable {
 			if (ok.equals("OK")) {
 				System.out.println("Envoi de la tache et du nombre d'element qui vont etre envoyes.");
 				
-				int nbFiles = 1;
-				String[] files = {"test.jpg"};
+				int nbFiles = 2;
+				String[] files = {"test.jpg","test2.jpg"};
 				String cmd = "echo toto";
 				String targetName = "lol.png";
 				
@@ -94,7 +94,7 @@ public class AgentListener extends Thread implements Runnable {
 			    do {
 			       bytesRead = is.read(temp, current, (temp.length-current));
 			       if(bytesRead >= 0) current += bytesRead;
-			    } while(current <= intFileSize);
+			    } while(current < intFileSize);
 
 			    bos.write(temp, 0 , current);
 			    bos.flush();
@@ -103,9 +103,10 @@ public class AgentListener extends Thread implements Runnable {
 			    System.out.println("Fini ! Resultat recu par agent : " + end);
 				
 			}
-			//System.out.println("Envoi operation END");
-			//agent.sendToAgent.println("END");
-			//String ackEnd = agent.receiveFromAgent.readLine();
+			System.out.println("Envoi operation END");
+			agent.sendToAgent.println("END");
+			String ackEnd = agent.receiveFromAgent.readLine();
+			System.out.println("AckEND = "+ackEnd);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
