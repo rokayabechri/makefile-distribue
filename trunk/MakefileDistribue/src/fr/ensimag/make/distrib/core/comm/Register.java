@@ -11,6 +11,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.ensimag.make.distrib.parser.Rule;
+
 public class Register extends Thread implements Runnable {
 	public static List<Agent> agents = null;
 	// Incremental value
@@ -67,8 +69,16 @@ public class Register extends Thread implements Runnable {
 		newAgent.sendToAgent = new PrintWriter(new BufferedWriter(
 				new OutputStreamWriter(soc.getOutputStream())), true);
 
+		Rule testRule = new Rule();
+		List<String> dependencies = new ArrayList<String>();
+		dependencies.add("test.jpg");
+		dependencies.add("test2.jpg");
 		
-		AgentListener al = new AgentListener(newAgent);
+		testRule.setCmd("notepad");
+		testRule.setDependencies(dependencies);
+		testRule.setTarget("lol.png");
+		
+		AgentListener al = new AgentListener(newAgent, testRule);
 		al.start();
 		agents.add(newAgent);
 		
