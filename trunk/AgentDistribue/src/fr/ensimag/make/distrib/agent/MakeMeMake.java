@@ -131,6 +131,7 @@ public class MakeMeMake {
 					System.out.println("\tReception en cours");
 					sendToServer.println("OK3");
 				    InputStream is = socket.getInputStream();
+
 				    FileOutputStream fos = new FileOutputStream(fileName);
 				    BufferedOutputStream bos = new BufferedOutputStream(fos);
 				    int bytesRead = is.read(temp, 0, temp.length);
@@ -138,7 +139,7 @@ public class MakeMeMake {
 				    do {
 				       bytesRead = is.read(temp, current, (temp.length-current));
 				       if(bytesRead >= 0) current += bytesRead;
-				    } while(current <= intFileSize);
+				    } while(current < intFileSize);
 				    bos.write(temp, 0 , current);
 				    bos.flush();
 				    sendToServer.println("OK4");
@@ -146,8 +147,10 @@ public class MakeMeMake {
 				}
 				
 				// exécution de l'opération
+				System.out.println("Execution commande");
+				System.out.println("<<<<>>>>");
 				ExecCommand.execute(operation);
-				
+				System.out.println("<<<<>>>>");
 				// récupération nom cible
 				String targetName = receiveFromServer.readLine();
 			    
@@ -166,7 +169,7 @@ public class MakeMeMake {
 				System.out.println("Envoie resultat...");
 				os.write(fileAsByteArray, 0, fileAsByteArray.length);
 				os.flush();
-				os.close();
+				//os.close();
 				String ok2 = receiveFromServer.readLine();
 				if (!ok2.equals("OK2"))
 					throw new Exception("Not OK2");
