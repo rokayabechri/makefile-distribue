@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
+import fr.ensimag.make.distrib.parser.Parser;
 import fr.ensimag.make.distrib.parser.Rule;
 
 public class AgentListener extends Thread implements Runnable {
@@ -63,7 +64,7 @@ public class AgentListener extends Thread implements Runnable {
 					throw new Exception ("fail4");
 			}
 			
-			// les fichiers sont envoyés, on attend le résultat désormais
+			// les fichiers sont envoyï¿½s, on attend le rï¿½sultat dï¿½sormais
 			agent.sendToAgent.println(targetName);
 			String fileLine = agent.receiveFromAgent.readLine();
 			int posComma = fileLine.indexOf(",");
@@ -96,7 +97,7 @@ public class AgentListener extends Thread implements Runnable {
 		    agent.sendToAgent.println("OK2");
 		    String end = agent.receiveFromAgent.readLine();
 		    System.out.println(">>>> " + agentListenerPrefix + " DONE target=" + end);
-		    
+		    Parser.taskDone(this.rule);
 			System.out.println("Envoi operation END");
 			agent.sendToAgent.println("END");
 			String ackEnd = agent.receiveFromAgent.readLine();
