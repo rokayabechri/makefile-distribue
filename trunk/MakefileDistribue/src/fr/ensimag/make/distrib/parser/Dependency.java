@@ -6,9 +6,50 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import fr.ensimag.make.distrib.core.mailbox.BAL;
 
 public class Dependency {
+
+	private static Map<String, Boolean> mapDepRdy;
+	private static Map<String, List<String>> mapDepTarget;
+	private static Map<String, Rule> mapTargetRule;
+	private static BAL bal;
+	
+	
+
+	public static Map<String, Boolean> getMapDepRdy() {
+		return mapDepRdy;
+	}
+
+	public static void setMapDepRdy(Map<String, Boolean> mapDepRdy) {
+		Dependency.mapDepRdy = mapDepRdy;
+	}
+
+	public static Map<String, List<String>> getMapDepTarget() {
+		return mapDepTarget;
+	}
+
+	public static void setMapDepTarget(Map<String, List<String>> mapDepTarget) {
+		Dependency.mapDepTarget = mapDepTarget;
+	}
+
+	public static Map<String, Rule> getMapTargetRule() {
+		return mapTargetRule;
+	}
+
+	public static void setMapTargetRule(Map<String, Rule> mapTargetRule) {
+		Dependency.mapTargetRule = mapTargetRule;
+	}
+
+	public static BAL getBal() {
+		return bal;
+	}
+
+	public static void setBal(BAL bal) {
+		Dependency.bal = bal;
+	}
 
 	public static Map<String, Rule> mapTargetRule(List<Rule> listRules) {
 		Map<String, Rule> mapTargetRule = new HashMap<String, Rule>();
@@ -25,6 +66,7 @@ public class Dependency {
 		boolean rdy = false;
 		Rule rule = null;
 		String dep = null;
+
 		for (int i = 0; i < listRules.size(); i++) {
 			rule = listRules.get(i);
 			for (int j = 0; j < rule.getDependencies().size(); j++) {
@@ -37,6 +79,14 @@ public class Dependency {
 				mapDepRdy.put(dep, rdy);
 			}
 		}
+
+		Set<String> setTarget = mapTargetRule.keySet();
+		for (String target : setTarget) {
+			if (!mapDepRdy.containsKey(target)) {
+				mapDepRdy.put(target, false);
+			}
+		}
+
 		return mapDepRdy;
 	}
 
@@ -92,21 +142,17 @@ public class Dependency {
 				task = task && mapDepRdy.get(dep);
 			}
 			if (task) {
-				// listRules.remove(rule);
 				listTasks.add(rule);
 			}
 		}
 		return listTasks;
 	}
 
-	public static void taskDone(Rule rule, Map<String, Boolean> mapDepRdy,
-			Map<String, List<String>> mapDepTarget, List<Rule> listTasks,
-			Map<String, Rule> mapTargetRule) {
-		// 1 - soit on previent les peres de la rule finie et ils viendront peut
-		// etre s'ajouter a la listTasks
-		// 2 - soit on re-get une nouvelle listTasks
+	public static void taskDone(Rule rule) {
+		// on previent les peres de la rule finie et ils viendront peut
+		// etre s'ajouter a la bal
+//		bal.deposeP();
 		mapDepRdy.put(rule.getTarget(), true);
-		// 1
 		for (int i = 0; i < mapDepTarget.get(rule.getTarget()).size(); i++) {
 			Rule currentRule = mapTargetRule.get(mapDepTarget.get(
 					rule.getTarget()).get(i));
@@ -116,8 +162,54 @@ public class Dependency {
 				task = task && mapDepRdy.get(dep);
 			}
 			if (task) {
-				listTasks.add(rule);
+				bal.depose(currentRule);
 			}
 		}
+//		bal.retireV();
 	}
+
+	public static void parse(String makefileName) {
+		// on parse le makefile et recupere la liste des regles
+		List<Rule> listRules = MakefileParser.parse(makefileName);
+
+		// on supprime la cible clean qui n'est pas geree
+		MakefileParser.cleanTargetAllAndClean(listRules);
+		
+		// on genere le mapping (target - regle)
+		mapTargetRule = Dependency.mapTargetRule(listRules);
+
+		// on genere le mapping (nom de la dependance - [boolean] pret a
+		// l'envoi)
+		mapDepRdy = Dependency.mapDepRdy(mapTargetRule, listRules);
+
+		// on prend en compte les dates de creation des cibles et des
+		// dependances si celles-ci existent
+		Dependency.recentDep(listRules, mapDepRdy);
+
+		// on genere le mapping (nom de la dependance - nom des cibles qui en
+		// dependent)
+		mapDepTarget = Dependency.mapDepTarget(listRules, mapDepRdy);
+
+		List<Rule> listTasks = Dependency.getListTasks(listRules, mapDepRdy);
+
+		bal = new BAL(listRules.size(), listTasks);
+	}
+
+	public static Rule getTask() {
+//		bal.retireP();
+		Rule rule = bal.retire();
+//		bal.deposeV();
+		return rule;
+	}
+
+	public static boolean isTasksToExec() {
+		Set<String> depSet = mapDepRdy.keySet();
+		for (String dep : depSet) {
+			if (!mapDepRdy.get(dep)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

@@ -26,14 +26,11 @@ public class MakefileParser {
 
 			fis = new FileInputStream(new File(makefileName));
 
-
 			fc = fis.getChannel();
 
 			int size = (int) fc.size();
 
-
 			ByteBuffer bBuff = ByteBuffer.allocate(size);
-
 
 			fc.read(bBuff);
 
@@ -43,8 +40,6 @@ public class MakefileParser {
 
 			if (bBuff.hasArray()) {
 				tabByte = bBuff.array();
-
-
 
 				Rule currentRule = null;
 				for (int i = 0; i < tabByte.length; i++) {
@@ -137,6 +132,17 @@ public class MakefileParser {
 			e.printStackTrace();
 		}
 		return listRule;
+	}
+
+	public static void cleanTargetAllAndClean(List<Rule> listRules) {
+		for (int i = 0; i < listRules.size(); i++) {
+			Rule rule = listRules.get(i);
+			if (rule.getTarget().equalsIgnoreCase("clean")
+					|| rule.getTarget().equalsIgnoreCase("all")) {
+				listRules.remove(i);
+				i--;
+			}
+		}
 	}
 
 }
