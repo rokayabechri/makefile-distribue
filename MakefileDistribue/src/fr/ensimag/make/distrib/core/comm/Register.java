@@ -11,6 +11,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.ensimag.make.distrib.parser.Dependency;
+import fr.ensimag.make.distrib.parser.Parser;
 import fr.ensimag.make.distrib.parser.Rule;
 
 public class Register extends Thread implements Runnable {
@@ -19,7 +21,7 @@ public class Register extends Thread implements Runnable {
 	private static int lastId = 0;
 	private static int port = 13337;
 	private static ServerSocket s = null;
-	
+
 	public void run() {
 		// Accept connexions and add the agent to the agents list
 		try {
@@ -29,25 +31,27 @@ public class Register extends Thread implements Runnable {
 			e1.printStackTrace();
 		}
 		if (s != null) {
-			while (true) {
+			while (Parser.isTasksToExec()) {
 				try {
-					
 					Socket soc;
-					
-					System.out.println("$THREAD REGISTER : Serveur en attente de connexion...");
+
+					System.out
+							.println("$THREAD REGISTER : Serveur en attente de connexion...");
 					soc = s.accept();
 					addAgent(soc);
-					System.out.println("$THREAD REGISTER : Connexion recue, new agent id=" + lastId);
+					System.out
+							.println("$THREAD REGISTER : Connexion recue, new agent id="
+									+ lastId);
 					// Un BufferedReader permet de lire par ligne.
 				} catch (IOException e) {
 					e.printStackTrace();
 					break;
 				}
 			}
-		}
-        
+			// execution des commandes finales avec toutes les dep generees
 
-        
+		}
+
 	}
 
 	private void addAgent(Socket soc) throws IOException {
@@ -55,32 +59,34 @@ public class Register extends Thread implements Runnable {
 			agents = new ArrayList<Agent>();
 		}
 		Agent newAgent = new Agent();
-		
+
 		newAgent.id = lastId;
 		lastId++;
 		newAgent.ip = soc.getInetAddress().toString();
 		newAgent.port = soc.getPort();
 		newAgent.socket = soc;
 		newAgent.available = true;
-		
+
 		newAgent.receiveFromAgent = new BufferedReader(new InputStreamReader(
 				soc.getInputStream()));
 
 		newAgent.sendToAgent = new PrintWriter(new BufferedWriter(
 				new OutputStreamWriter(soc.getOutputStream())), true);
 
-		Rule testRule = new Rule();
-		List<String> dependencies = new ArrayList<String>();
-		dependencies.add("test.jpg");
-		dependencies.add("test2.jpg");
-		
-		testRule.setCmd("notepad");
-		testRule.setDependencies(dependencies);
-		testRule.setTarget("lol.png");
-		
-		AgentListener al = new AgentListener(newAgent, testRule);
+		// Rule testRule = new Rule();
+		// List<String> dependencies = new ArrayList<String>();
+		// dependencies.add("test.jpg");
+		// dependencies.add("test2.jpg");
+		//
+		// testRule.setCmd("notepad");
+		// testRule.setDependencies(dependencies);
+		// testRule.setTarget("lol.png");
+
+		Rule rule = Parser.getTask();
+
+		AgentListener al = new AgentListener(newAgent, rule);
 		al.start();
 		agents.add(newAgent);
-		
+
 	}
 }
