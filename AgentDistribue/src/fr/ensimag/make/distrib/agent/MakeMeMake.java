@@ -89,6 +89,7 @@ public class MakeMeMake {
 			
 			
 			if (action.equals("END")) {
+				System.out.println("Ordre de fin de travail recu, fin du processus.");
 		        sendToServer.println("ACK END") ;
 		        return false;
 		       // receiveFromServer.close();
