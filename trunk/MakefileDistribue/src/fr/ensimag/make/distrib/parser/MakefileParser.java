@@ -23,21 +23,13 @@ public class MakefileParser {
 		ArrayList<Rule> listRule = new ArrayList<Rule>();
 
 		try {
-
 			fis = new FileInputStream(new File(makefileName));
-
 			fc = fis.getChannel();
-
 			int size = (int) fc.size();
-
 			ByteBuffer bBuff = ByteBuffer.allocate(size);
-
 			fc.read(bBuff);
-
 			bBuff.flip();
-
 			byte[] tabByte;
-
 			if (bBuff.hasArray()) {
 				tabByte = bBuff.array();
 
@@ -119,11 +111,9 @@ public class MakefileParser {
 						break;
 					}
 				}
-
 			} else {
 				System.out.println("bBuff n'a pas d'array\n");
 			}
-
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

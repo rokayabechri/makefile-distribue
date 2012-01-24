@@ -3,6 +3,8 @@ package fr.ensimag.make.distrib.parser;
 import java.util.List;
 import java.util.Map;
 
+import fr.ensimag.make.distrib.core.exception.WaitOneSecException;
+
 public class Tests {
 
 	/**
@@ -39,14 +41,21 @@ public class Tests {
 		// // on recupere la list des tasks faisables
 		// List<Rule> listTasks = Dependency.getListTasks(listRules, mapDepRdy);
 
-		Parser.parse("makefile_simple");
+		Parser.parse("Makefile_blender");
 
 		while (Parser.isTasksToExec()) {
 			System.out.println("bal :" + Dependency.getBal());
 			System.out.println("mapDepRdy :" + Dependency.getMapDepRdy());
 			System.out.println("--------------------------------------------");
-			Rule rule = Parser.getTask();
-			Parser.taskDone(rule);
+			Rule rule;
+			try {
+				rule = Parser.getTask();
+				Parser.taskDone(rule);
+			} catch (WaitOneSecException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 
 		// System.out.println("bal :" + Dependency.getBal());

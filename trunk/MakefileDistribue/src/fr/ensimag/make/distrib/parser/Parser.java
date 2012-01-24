@@ -1,5 +1,7 @@
 package fr.ensimag.make.distrib.parser;
 
+import fr.ensimag.make.distrib.core.exception.WaitOneSecException;
+
 public class Parser {
 
 	public static void taskDone(Rule rule) {
@@ -10,7 +12,7 @@ public class Parser {
 		Dependency.parse(makefileName);
 	}
 
-	public static Rule getTask() {
+	public static Rule getTask() throws WaitOneSecException {
 		return Dependency.getTask();
 	}
 	
