@@ -11,8 +11,10 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.ensimag.make.distrib.parser.Parser;
+
 public class Register extends Thread implements Runnable {
-	public static List<Agent> agents = null;
+	public static List<AgentListener> agentListeners = null;
 	// Incremental value
 	private static int lastId = 0;
 	private static int port = 13337;
@@ -27,30 +29,31 @@ public class Register extends Thread implements Runnable {
 			e1.printStackTrace();
 		}
 		if (s != null) {
-			while (true) {
+			while (Parser.isTasksToExec()) {
 				try {
-					
 					Socket soc;
-					
-					System.out.println("$THREAD REGISTER : Serveur en attente de connexion...");
+					s.setSoTimeout(5000);
 					soc = s.accept();
 					addAgent(soc);
-					System.out.println("$THREAD REGISTER : Connexion recue, new agent id=" + lastId);
+					System.out.println("$THREAD REGISTER : Connexion recue, new agent id=" + (lastId-1));
 					// Un BufferedReader permet de lire par ligne.
-				} catch (IOException e) {
-					e.printStackTrace();
-					break;
+				} catch (Exception e) {
 				}
 			}
 		}
-        
+		
+		if (agentListeners != null) {
+			for (AgentListener al : agentListeners)
+				al.interrupt();
+		}
+        this.interrupt();
 
         
 	}
 
 	private void addAgent(Socket soc) throws IOException {
-		if (agents == null) {
-			agents = new ArrayList<Agent>();
+		if (agentListeners == null) {
+			agentListeners = new ArrayList<AgentListener>();
 		}
 		Agent newAgent = new Agent();
 		
@@ -69,7 +72,7 @@ public class Register extends Thread implements Runnable {
 
 		AgentListener al = new AgentListener(newAgent);
 		al.start();
-		agents.add(newAgent);
+		agentListeners.add(al);
 		
 	}
 }

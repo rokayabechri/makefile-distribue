@@ -17,8 +17,6 @@ public class Dependency {
 	private static Map<String, List<String>> mapDepTarget;
 	private static Map<String, Rule> mapTargetRule;
 	private static BAL bal;
-	
-	
 
 	public static Map<String, Boolean> getMapDepRdy() {
 		return mapDepRdy;
@@ -158,7 +156,7 @@ public class Dependency {
 	public static void taskDone(Rule rule) {
 		// on previent les peres de la rule finie et ils viendront peut
 		// etre s'ajouter a la bal
-//		bal.deposeP();
+		// bal.deposeP();
 		mapDepRdy.put(rule.getTarget(), true);
 		for (int i = 0; i < mapDepTarget.get(rule.getTarget()).size(); i++) {
 			Rule currentRule = mapTargetRule.get(mapDepTarget.get(
@@ -172,7 +170,7 @@ public class Dependency {
 				bal.depose(currentRule);
 			}
 		}
-//		bal.retireV();
+		// bal.retireV();
 	}
 
 	public static void parse(String makefileName) {
@@ -181,7 +179,7 @@ public class Dependency {
 
 		// on supprime la cible clean qui n'est pas geree
 		MakefileParser.cleanTargetAllAndClean(listRules);
-		
+
 		// on genere le mapping (target - regle)
 		mapTargetRule = Dependency.mapTargetRule(listRules);
 
@@ -198,14 +196,14 @@ public class Dependency {
 		mapDepTarget = Dependency.mapDepTarget(listRules, mapDepRdy);
 
 		List<Rule> listTasks = Dependency.getListTasks(listRules, mapDepRdy);
-		
+
 		bal = new BAL(listRules.size(), listTasks);
 	}
 
 	public static Rule getTask() throws WaitOneSecException {
-//		bal.retireP();
+		// bal.retireP();
 		Rule rule = bal.retire();
-//		bal.deposeV();
+		// bal.deposeV();
 		return rule;
 	}
 
@@ -217,6 +215,12 @@ public class Dependency {
 			}
 		}
 		return false;
+	}
+
+	public static void failedTarget(Rule rule) {
+		// bal.deposeP();
+		bal.depose(rule);
+		// bal.retireV();
 	}
 
 }
