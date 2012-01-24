@@ -8,29 +8,15 @@ public class EntryPoint {
 	static private String aide = "Usage : java [nom appli] makefileName\n\tPr�cisez le nom du makefile à ex�cuter";
 	private static Register register = new Register();
 
-	static private boolean isGlobalTargetOver = false;
-	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		boolean next = true;
 		if (args == null || args.length < 1) {
 			System.out.println(aide);
-			next = false;
-		}
-		if (next) {
+		} else {
 			Parser.parse(args[0]);
 			register.start();
 		}
-	}
-
-
-	public static void iVeJustDoneTheGlobalTarget() {
-		isGlobalTargetOver = true;
-	}
-	
-	public static boolean isGlobalTargetOver() {
-		return isGlobalTargetOver;
 	}
 }
