@@ -16,6 +16,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import com.developpez.adiguba.shell.ProcessConsumer;
 import com.developpez.adiguba.shell.Shell;
 
 public class MakeMeMake {
@@ -65,8 +66,11 @@ public class MakeMeMake {
 														.getOutputStream())),
 										true);
 							}
-							if (!waitForWork())
-								break;
+							try {
+								if (!waitForWork())
+									break;
+							} catch (Error e) {
+							}
 						}
 						leave();
 					} catch (IOException e) {
@@ -92,7 +96,7 @@ public class MakeMeMake {
 		}
 	}
 
-	static private boolean waitForWork() throws Exception {
+	static private boolean waitForWork() throws Exception, Error {
 		if (sendToServer != null && receiveFromServer != null) {
 			System.out.println("Envoie \"OK\"");
 			sendToServer.println("OK");
@@ -161,16 +165,26 @@ public class MakeMeMake {
 					} while (current < intFileSize);
 					bos.write(temp, 0, current);
 					bos.flush();
+					bos.close();
 					sendToServer.println("OK4");
 					System.out.println("\tReception terminee, fichier recu.");
 				}
+
+//				Thread.sleep(500);
 
 				// ex�cution de l'op�ration
 				System.out.println("Execution commande");
 				System.out.println("<<<<>>>>");
 				Shell sh = new Shell();
-				String result = sh.command(operation).consumeAsString();
-				System.out.println(result);
+				int retVal = sh.command(operation).error().consume();
+				System.out.println(retVal);
+				if (retVal != 0) {
+					System.out.println("Erreur lors de l'exec commande");
+					String targetNameError = receiveFromServer.readLine();
+					sendToServer.println(-1 + ", ");
+					throw new Error();
+				}
+
 				System.out.println("<<<<>>>>");
 				// r�cup�ration nom cible
 				String targetName = receiveFromServer.readLine();
