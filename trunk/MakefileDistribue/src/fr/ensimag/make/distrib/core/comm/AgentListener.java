@@ -45,6 +45,7 @@ public class AgentListener extends Thread implements Runnable {
 				}
 				
 				if (this.rule == null) {
+					String ok = agent.receiveFromAgent.readLine();
 					System.out.println("Envoi operation END");
 					agent.sendToAgent.println("END");
 					String ackEnd = agent.receiveFromAgent.readLine();
