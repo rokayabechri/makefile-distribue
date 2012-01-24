@@ -146,6 +146,12 @@ public class Dependency {
 				listTasks.add(rule);
 			}
 		}
+		for (int i = 0; i < listTasks.size(); i++) {
+			if (mapDepRdy.get(listTasks.get(i).getTarget())) {
+				listTasks.remove(i);
+				i--;
+			}
+		}
 		return listTasks;
 	}
 
@@ -192,7 +198,7 @@ public class Dependency {
 		mapDepTarget = Dependency.mapDepTarget(listRules, mapDepRdy);
 
 		List<Rule> listTasks = Dependency.getListTasks(listRules, mapDepRdy);
-
+		
 		bal = new BAL(listRules.size(), listTasks);
 	}
 
