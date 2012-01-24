@@ -3,12 +3,10 @@ package fr.ensimag.make.distrib.core.mailbox;
 public class Semaphore
 {
 	private int valeur;
-	private int limite;
 	
 	public Semaphore(int valeur, int limite)
 	{
 		this.valeur=valeur;
-		this.limite=limite;
 	}
 	
 	public int getValeur()

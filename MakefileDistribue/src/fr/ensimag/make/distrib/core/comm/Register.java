@@ -11,8 +11,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.ensimag.make.distrib.parser.Rule;
-
 public class Register extends Thread implements Runnable {
 	public static List<Agent> agents = null;
 	// Incremental value

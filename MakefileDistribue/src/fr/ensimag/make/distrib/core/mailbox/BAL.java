@@ -7,8 +7,6 @@ import fr.ensimag.make.distrib.core.main.EntryPoint;
 import fr.ensimag.make.distrib.parser.Rule;
 
 public class BAL {
-	private int rulesQuantity;
-	private int rulesDone = 0;
 	
 	private List<Rule> listTasks;
 	private Semaphore semaphoreDepot, semaphoreRetrait;
@@ -17,7 +15,7 @@ public class BAL {
 		this.listTasks = listTasks;
 		semaphoreDepot = new Semaphore(listTasksMaxSize, listTasksMaxSize);
 		semaphoreRetrait = new Semaphore(0, listTasksMaxSize);
-		rulesQuantity = listTasksMaxSize;
+
 	}
 
 	public void deposeP() {
@@ -48,7 +46,7 @@ public class BAL {
 
 	synchronized public Rule retire() throws WaitOneSecException {
 		if (listTasks.isEmpty() && !EntryPoint.isGlobalTargetOver()) {
-			// exception blocante dans le cas où il reste des tâches à accomplir
+			// exception blocante dans le cas oï¿½ il reste des tï¿½ches ï¿½ accomplir
 			// mais qu'aucune n'est encore faisable
 			throw new WaitOneSecException();
 		}
