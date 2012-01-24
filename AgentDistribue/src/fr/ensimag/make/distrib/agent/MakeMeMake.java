@@ -62,6 +62,7 @@ public class MakeMeMake {
 				        leave();
 					} catch (IOException e) {
 						System.out.println("La connexion avec le serveur a été interrompue... Tentative de reconnexion.");
+						e.printStackTrace();
 					}
 				}
 			}
