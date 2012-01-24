@@ -4,10 +4,11 @@ import java.util.List;
 
 import fr.ensimag.make.distrib.core.exception.WaitOneSecException;
 import fr.ensimag.make.distrib.core.main.EntryPoint;
+import fr.ensimag.make.distrib.parser.Parser;
 import fr.ensimag.make.distrib.parser.Rule;
 
 public class BAL {
-	
+
 	private List<Rule> listTasks;
 	private Semaphore semaphoreDepot, semaphoreRetrait;
 
@@ -39,21 +40,21 @@ public class BAL {
 			listTasks.add(rule);
 		}
 	}
-	
+
 	public boolean isEmpty() {
 		return listTasks.isEmpty();
 	}
 
 	synchronized public Rule retire() throws WaitOneSecException {
-		if (listTasks.isEmpty() && !EntryPoint.isGlobalTargetOver()) {
+		if (listTasks.isEmpty() && Parser.isTasksToExec()) {
 			// exception blocante dans le cas o� il reste des t�ches � accomplir
 			// mais qu'aucune n'est encore faisable
 			throw new WaitOneSecException();
 		}
-		
+
 		if (!listTasks.isEmpty()) {
 			return listTasks.remove(0);
-		} 
+		}
 		return null;
 	}
 
