@@ -13,10 +13,6 @@ package fr.ensimag.make.distrib.agent;
 
 
 import java.io.IOException;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.util.Arrays;
-import java.util.Locale;
 
 
 
@@ -57,8 +53,6 @@ extends Thread {
 	 */
 	static public final int NON_EXISTING_OBJECT = RC_NOT_FOUND;
 
-	
-	static private final boolean bDebug   = false;  
 	static private final String  CLASS    = ExecCommand.class.getName();   
 
 
@@ -80,7 +74,6 @@ extends Thread {
 	 */
 	public ExecCommand(String command) 
 	throws IOException {
-		final String METHOD = "ExecCommand";
 		this.command = command;
 
 		/**
@@ -115,8 +108,6 @@ extends Thread {
 	 */
 	public ExecCommand(String[] commandArray) 
 	throws IOException {
-		final String METHOD = "ExecCommand";
-
 		this.commandArray = commandArray;
 
 		/**
@@ -147,7 +138,6 @@ extends Thread {
 	 * 
 	 */
 	public void run() {
-		final String METHOD = "run";
 		try {
 			this.process.waitFor();
 		} catch (InterruptedException ie) {
@@ -197,7 +187,6 @@ extends Thread {
 	 *
 	 */
 	public void clean() {
-		final String METHOD = "clean";
 		//
 		//this.stdoutReader.clean();
 		this.stdoutReader = null;
@@ -238,8 +227,6 @@ extends Thread {
 			command = "";
 		}
 		ExecCommand execCommand = null;
-
-		long start = System.currentTimeMillis();
 
 		try {
 			execCommand = new ExecCommand(command);
