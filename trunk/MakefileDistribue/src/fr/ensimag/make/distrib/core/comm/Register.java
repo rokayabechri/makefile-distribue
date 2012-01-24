@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.ensimag.make.distrib.core.main.EntryPoint;
 import fr.ensimag.make.distrib.parser.Parser;
 
 public class Register extends Thread implements Runnable {
@@ -35,11 +36,15 @@ public class Register extends Thread implements Runnable {
 					s.setSoTimeout(5000);
 					soc = s.accept();
 					addAgent(soc);
-					System.out.println("$THREAD REGISTER : Connexion recue, new agent id=" + (lastId-1));
+					EntryPoint.begin();
+					System.out.println("$Registre : agent" + (lastId-1));
 					// Un BufferedReader permet de lire par ligne.
 				} catch (Exception e) {
 				}
 			}
+			// should not do anything, but present 'in case of'
+			EntryPoint.end();
+			EntryPoint.printTotalTime();
 		}
 		
 		if (agentListeners != null) {

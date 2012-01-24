@@ -1,6 +1,7 @@
 package fr.ensimag.make.distrib.parser;
 
 import fr.ensimag.make.distrib.core.exception.WaitOneSecException;
+import fr.ensimag.make.distrib.core.main.EntryPoint;
 
 public class Parser {
 
@@ -17,7 +18,9 @@ public class Parser {
 	}
 	
 	public static boolean isTasksToExec() {
-		return Dependency.isTasksToExec();
+		boolean retour = Dependency.isTasksToExec();
+		if (!retour) EntryPoint.end();
+		return retour;
 	}
 
 	public static void failedTarget(Rule rule) {
