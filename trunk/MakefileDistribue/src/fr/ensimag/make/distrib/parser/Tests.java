@@ -1,8 +1,5 @@
 package fr.ensimag.make.distrib.parser;
 
-import java.util.List;
-import java.util.Map;
-
 import fr.ensimag.make.distrib.core.exception.WaitOneSecException;
 
 public class Tests {
