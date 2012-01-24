@@ -9,29 +9,9 @@ import fr.ensimag.make.distrib.parser.Rule;
 public class BAL {
 
 	private List<Rule> listTasks;
-	private Semaphore semaphoreDepot, semaphoreRetrait;
 
 	public BAL(int listTasksMaxSize, List<Rule> listTasks) {
 		this.listTasks = listTasks;
-		semaphoreDepot = new Semaphore(listTasksMaxSize, listTasksMaxSize);
-		semaphoreRetrait = new Semaphore(0, listTasksMaxSize);
-
-	}
-
-	public void deposeP() {
-		semaphoreDepot.P();
-	}
-
-	public void deposeV() {
-		semaphoreDepot.V();
-	}
-
-	public void retireP() {
-		semaphoreRetrait.P();
-	}
-
-	public void retireV() {
-		semaphoreRetrait.V();
 	}
 
 	synchronized public void depose(Rule rule) {

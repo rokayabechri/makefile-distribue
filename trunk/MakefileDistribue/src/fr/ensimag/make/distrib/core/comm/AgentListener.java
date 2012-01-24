@@ -43,8 +43,7 @@ public class AgentListener extends Thread implements Runnable {
 							} catch (InterruptedException ie) {
 								// nothing to do :
 								// if Interrupted, AgentListener goes checking
-								// again
-								// as required
+								// again as required
 							}
 						}
 					}
@@ -83,7 +82,7 @@ public class AgentListener extends Thread implements Runnable {
 						File myFile = new File("./" + files.get(i));
 						byte[] fileAsByteArray = new byte[(int) myFile.length()];
 
-						agent.sendToAgent.println(myFile.length() + ","
+						agent.sendToAgent.println(myFile.canExecute() + "," + myFile.length() + ","
 								+ myFile.getName());
 						String ok3 = agent.receiveFromAgent.readLine();
 
