@@ -24,7 +24,7 @@ public class AgentListener extends Thread implements Runnable {
 	
 	public void run() {
 		String agentListenerPrefix = "#" + agent.id;
-		
+	
 		boolean allGood = false;
 		while (true) {
 			try {
