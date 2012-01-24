@@ -2,9 +2,14 @@ package fr.ensimag.make.distrib.core.mailbox;
 
 import java.util.List;
 
+import fr.ensimag.make.distrib.core.exception.WaitOneSecException;
+import fr.ensimag.make.distrib.core.main.EntryPoint;
 import fr.ensimag.make.distrib.parser.Rule;
 
 public class BAL {
+	private int rulesQuantity;
+	private int rulesDone = 0;
+	
 	private List<Rule> listTasks;
 	private Semaphore semaphoreDepot, semaphoreRetrait;
 
@@ -12,6 +17,7 @@ public class BAL {
 		this.listTasks = listTasks;
 		semaphoreDepot = new Semaphore(listTasksMaxSize, listTasksMaxSize);
 		semaphoreRetrait = new Semaphore(0, listTasksMaxSize);
+		rulesQuantity = listTasksMaxSize;
 	}
 
 	public void deposeP() {
@@ -35,13 +41,21 @@ public class BAL {
 			listTasks.add(rule);
 		}
 	}
+	
+	public boolean isEmpty() {
+		return listTasks.isEmpty();
+	}
 
-	synchronized public Rule retire() {
-		// pour le moment, on recupere le premier element de la liste a chaque
-		// fois
+	synchronized public Rule retire() throws WaitOneSecException {
+		if (listTasks.isEmpty() && !EntryPoint.isGlobalTargetOver()) {
+			// exception blocante dans le cas où il reste des tâches à accomplir
+			// mais qu'aucune n'est encore faisable
+			throw new WaitOneSecException();
+		}
+		
 		if (!listTasks.isEmpty()) {
 			return listTasks.remove(0);
-		}
+		} 
 		return null;
 	}
 

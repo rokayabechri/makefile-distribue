@@ -64,8 +64,12 @@ ip = sys.argv[1];
 port = sys.argv[2];
 
 rc = RunCommand()
-rc.add_host("127.0.0.1,b3, ")
-rc.add_host("195.221.227.231,morardo, ")
+
+file = open('hosts.txt','r')
+for line in file:
+    print('Ajout de l\'hote : '+line)
+    rc.add_host(line)
+
 
 try:
 	rc.connect("")

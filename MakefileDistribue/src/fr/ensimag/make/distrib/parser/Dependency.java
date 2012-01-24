@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import fr.ensimag.make.distrib.core.exception.WaitOneSecException;
 import fr.ensimag.make.distrib.core.mailbox.BAL;
 
 public class Dependency {
@@ -195,7 +196,7 @@ public class Dependency {
 		bal = new BAL(listRules.size(), listTasks);
 	}
 
-	public static Rule getTask() {
+	public static Rule getTask() throws WaitOneSecException {
 //		bal.retireP();
 		Rule rule = bal.retire();
 //		bal.deposeV();
