@@ -135,10 +135,24 @@ public class MakeMeMake {
 					System.out.println("Reception fichier #" + (i + 1) + "/"
 							+ nbFiles);
 					String fileLine = receiveFromServer.readLine();
+					int j = 0;
+					System.out.println(j);j++;
 					posComma = fileLine.indexOf(",");
-					String fileSize = fileLine.substring(0, posComma);
-					String fileName = fileLine.substring(posComma + 1,
-							fileLine.length());
+					System.out.println("posComma = "+posComma);
+					System.out.println(j);j++;
+					boolean isExecutable = Boolean.parseBoolean(fileLine.substring(0, posComma));
+					System.out.println(j);j++;
+					String subFileLine = fileLine.substring(posComma + 1, fileLine.length());
+					System.out.println("fileLine = "+fileLine);
+					System.out.println("subFileLine = "+subFileLine);j++;
+					posComma = subFileLine.indexOf(",");
+					System.out.println(j);j++;
+					System.out.println("posComma = "+posComma);
+					String fileSize = subFileLine.substring(0, posComma);
+					System.out.println("fileSize="+fileSize);j++;
+					String fileName = subFileLine.substring(posComma + 1,
+							subFileLine.length());
+					System.out.println("fileName="+fileSize);j++;
 					int intFileSize = 0;
 					try {
 						intFileSize = Integer.valueOf(fileSize);
@@ -166,6 +180,10 @@ public class MakeMeMake {
 					bos.write(temp, 0, current);
 					bos.flush();
 					bos.close();
+					if (isExecutable) {
+						File f = new File(fileName);
+						f.setExecutable(true);
+					}
 					sendToServer.println("OK4");
 					System.out.println("\tReception terminee, fichier recu.");
 				}
