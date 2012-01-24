@@ -5,7 +5,7 @@ import fr.ensimag.make.distrib.parser.Parser;
 
 public class EntryPoint {
 
-	static private String aide = "Usage : java [nom appli] makefileName\n\tPr�cisez le nom du makefile à ex�cuter";
+	static private String aide = "Usage : java [nom appli] makefileName\n\tPrecisez le nom du makefile à executer";
 	private static Register register = new Register();
 
 	/**
