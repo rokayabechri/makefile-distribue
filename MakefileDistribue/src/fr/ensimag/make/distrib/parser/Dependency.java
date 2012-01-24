@@ -153,10 +153,9 @@ public class Dependency {
 		return listTasks;
 	}
 
-	public static void taskDone(Rule rule) {
+	public synchronized static void taskDone(Rule rule) {
 		// on previent les peres de la rule finie et ils viendront peut
 		// etre s'ajouter a la bal
-		// bal.deposeP();
 		mapDepRdy.put(rule.getTarget(), true);
 		for (int i = 0; i < mapDepTarget.get(rule.getTarget()).size(); i++) {
 			Rule currentRule = mapTargetRule.get(mapDepTarget.get(
@@ -170,7 +169,6 @@ public class Dependency {
 				bal.depose(currentRule);
 			}
 		}
-		// bal.retireV();
 	}
 
 	public static void parse(String makefileName) {
@@ -200,10 +198,8 @@ public class Dependency {
 		bal = new BAL(listRules.size(), listTasks);
 	}
 
-	public static Rule getTask() throws WaitOneSecException {
-		// bal.retireP();
+	public synchronized static Rule getTask() throws WaitOneSecException {
 		Rule rule = bal.retire();
-		// bal.deposeV();
 		return rule;
 	}
 
@@ -217,10 +213,8 @@ public class Dependency {
 		return false;
 	}
 
-	public static void failedTarget(Rule rule) {
-		// bal.deposeP();
+	public synchronized static void failedTarget(Rule rule) {
 		bal.depose(rule);
-		// bal.retireV();
 	}
 
 }
