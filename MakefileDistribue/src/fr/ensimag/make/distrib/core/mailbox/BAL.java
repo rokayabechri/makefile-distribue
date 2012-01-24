@@ -3,7 +3,6 @@ package fr.ensimag.make.distrib.core.mailbox;
 import java.util.List;
 
 import fr.ensimag.make.distrib.core.exception.WaitOneSecException;
-import fr.ensimag.make.distrib.core.main.EntryPoint;
 import fr.ensimag.make.distrib.parser.Parser;
 import fr.ensimag.make.distrib.parser.Rule;
 

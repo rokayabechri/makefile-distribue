@@ -38,7 +38,7 @@ public class Tests {
 		// // on recupere la list des tasks faisables
 		// List<Rule> listTasks = Dependency.getListTasks(listRules, mapDepRdy);
 
-		Parser.parse("Makefile_blender");
+		Parser.parse("makefile_simple");
 
 		while (Parser.isTasksToExec()) {
 			System.out.println("bal :" + Dependency.getBal());
