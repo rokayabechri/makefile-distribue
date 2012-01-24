@@ -9,6 +9,7 @@
                 <attribute name="Class-Path" value="."/>
             </manifest>
             <fileset dir="../bin"/>
+        	<zipfileset excludes="META-INF/*.SF" src="../lib/Shell.jar"/>
         </jar>
     </target>
 </project>
