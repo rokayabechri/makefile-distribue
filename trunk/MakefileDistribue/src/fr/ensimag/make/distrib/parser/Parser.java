@@ -20,4 +20,8 @@ public class Parser {
 		return Dependency.isTasksToExec();
 	}
 
+	public static void failedTarget(Rule rule) {
+		Dependency.failedTarget(rule);
+	}
+
 }
