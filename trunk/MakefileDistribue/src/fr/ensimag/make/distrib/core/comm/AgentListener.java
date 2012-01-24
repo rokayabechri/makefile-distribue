@@ -24,7 +24,7 @@ public class AgentListener extends Thread implements Runnable {
 	
 	public void run() {
 		String agentListenerPrefix = "#" + agent.id;
-		System.out.println(agentListenerPrefix + " START target=" + rule.getTarget());
+		
 		boolean allGood = false;
 		while (true) {
 			try {
@@ -51,6 +51,8 @@ public class AgentListener extends Thread implements Runnable {
 					System.out.println("AckEND = "+ackEnd);
 					break;
 				}
+				
+				System.out.println(agentListenerPrefix + " START target=" + rule.getTarget());
 				
 				allGood = false;
 				String ok = agent.receiveFromAgent.readLine();
