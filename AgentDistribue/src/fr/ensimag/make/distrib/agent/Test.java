@@ -1,5 +1,6 @@
 package fr.ensimag.make.distrib.agent;
 
+import java.io.File;
 import java.io.IOException;
 
 import com.developpez.adiguba.shell.ProcessConsumer;
@@ -11,6 +12,7 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+			
 		String operation = "gcc -o hello.o -c hello.c -W -Wall -ansi -pedantic";
 		Shell sh = new Shell();
 		try {
