@@ -1,2 +1,2 @@
-java -jar /tmp/MakeDistribCoreServer.jar &
-python deploy.py 195.221.227.232 13337
+java -jar ../build/MakeDistribCoreServer.jar ../build/makefile2 &
+python deploy.py 195.221.227.231 13337

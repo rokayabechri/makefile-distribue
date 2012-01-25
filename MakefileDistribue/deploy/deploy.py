@@ -76,7 +76,7 @@ try:
 except:
 	print("erreur de config");
 else:
-	rc.put("MakeDistribAgent.jar")
+	rc.put("../../AgentDistribue/build/MakeDistribAgent.jar")
 	rc.run("java -jar /tmp/MakeDistribAgent.jar "+ip+" "+port);
 finally:
 	rc.close("")
