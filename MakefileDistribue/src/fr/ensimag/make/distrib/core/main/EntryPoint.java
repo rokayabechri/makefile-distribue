@@ -21,6 +21,7 @@ public class EntryPoint {
 		if (args == null || args.length < 1) {
 			System.out.println(aide);
 		} else {
+			System.out.println("Demarrage de MakefileDistribue, makefile traite : " + args[0]);
 			Parser.parse(args[0]);
 			register.start();
 		}
