@@ -95,7 +95,8 @@ public class AgentListener extends Thread implements Runnable {
 						OutputStream os = agent.socket.getOutputStream();
 						os.write(fileAsByteArray, 0, fileAsByteArray.length);
 						os.flush();
-
+						fis.close();
+						
 						String ok4 = agent.receiveFromAgent.readLine();
 						if (!ok4.equals("OK4"))
 							throw new Exception("fail4");

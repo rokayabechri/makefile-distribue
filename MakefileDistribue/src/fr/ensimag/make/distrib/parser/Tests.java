@@ -38,22 +38,22 @@ public class Tests {
 		// // on recupere la list des tasks faisables
 		// List<Rule> listTasks = Dependency.getListTasks(listRules, mapDepRdy);
 
-		Parser.parse("makefile_simple");
+		Parser.parse("Makefile");
 
-		while (Parser.isTasksToExec()) {
-			System.out.println("bal :" + Dependency.getBal());
-			System.out.println("mapDepRdy :" + Dependency.getMapDepRdy());
-			System.out.println("--------------------------------------------");
-			Rule rule;
-			try {
-				rule = Parser.getTask();
-				Parser.taskDone(rule);
-			} catch (WaitOneSecException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
+//		while (Parser.isTasksToExec()) {
+//			System.out.println("bal :" + Dependency.getBal());
+//			System.out.println("mapDepRdy :" + Dependency.getMapDepRdy());
+//			System.out.println("--------------------------------------------");
+//			Rule rule;
+//			try {
+//				rule = Parser.getTask();
+//				Parser.taskDone(rule);
+//			} catch (WaitOneSecException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//		}
 
 		// System.out.println("bal :" + Dependency.getBal());
 		// System.out.println("mapDepRdy :" + Dependency.getMapDepRdy());
