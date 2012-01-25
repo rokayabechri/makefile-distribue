@@ -58,7 +58,7 @@ public class AgentListener extends Thread implements Runnable {
 					}
 
 					System.out.println(agentListenerPrefix + " START target="
-							+ rule.getTarget());
+							+ rule.getTarget() + " | cmd=" + rule.getCmd());
 
 					allGood = false;
 					String ok = agent.receiveFromAgent.readLine();
