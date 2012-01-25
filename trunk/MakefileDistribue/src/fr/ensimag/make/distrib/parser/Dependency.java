@@ -174,7 +174,7 @@ public class Dependency {
 	public static void parse(String makefileName) {
 		// on parse le makefile et recupere la liste des regles
 		List<Rule> listRules = MakefileParser.parse(makefileName);
-
+		
 		// on supprime la cible clean qui n'est pas geree
 		MakefileParser.cleanTargetAllAndClean(listRules);
 
