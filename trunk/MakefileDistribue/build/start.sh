@@ -1,4 +1,4 @@
-cd makefiles/premier/;
+cd makefiles/matrix/;
 java -jar ../../MakeDistribCoreServer.jar Makefile &
 cd -;
-python deploy.py 195.221.227.231 13337
+python deploy.py 127.0.0.1 13337

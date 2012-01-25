@@ -1,5 +1,33 @@
-cube.mpg : frame_1.png frame_2.png frame_3.png frame_4.png frame_5.png frame_6.png frame_7.png frame_8.png frame_9.png frame_10.png frame_11.png frame_12.png frame_13.png frame_14.png frame_15.png frame_16.png frame_17.png frame_18.png frame_19.png frame_20.png frame_21.png frame_22.png frame_23.png frame_24.png frame_25.png frame_26.png frame_27.png frame_28.png frame_29.png frame_30.png frame_31.png frame_32.png frame_33.png frame_34.png frame_35.png frame_36.png frame_37.png frame_38.png frame_39.png frame_40.png frame_41.png frame_42.png frame_43.png frame_44.png frame_45.png frame_46.png frame_47.png frame_48.png frame_49.png frame_50.png frame_51.png frame_52.png frame_53.png frame_54.png frame_55.png frame_56.png frame_57.png frame_58.png frame_59.png frame_60.png frame_61.png frame_62.png frame_63.png frame_64.png frame_65.png frame_66.png frame_67.png frame_68.png frame_69.png frame_70.png frame_71.png frame_72.png frame_73.png frame_74.png frame_75.png frame_76.png frame_77.png frame_78.png frame_79.png frame_80.png frame_81.png frame_82.png frame_83.png frame_84.png frame_85.png frame_86.png frame_87.png frame_88.png frame_89.png frame_90.png frame_91.png frame_92.png frame_93.png frame_94.png frame_95.png frame_96.png frame_97.png frame_98.png frame_99.png frame_100.png frame_101.png frame_102.png frame_103.png frame_104.png frame_105.png frame_106.png frame_107.png frame_108.png frame_109.png frame_110.png frame_111.png frame_112.png frame_113.png
+cube.mpg : part1 part2
 		convert frame_1.png frame_2.png frame_3.png frame_4.png frame_5.png frame_6.png frame_7.png frame_8.png frame_9.png frame_10.png frame_11.png frame_12.png frame_13.png frame_14.png frame_15.png frame_16.png frame_17.png frame_18.png frame_19.png frame_20.png frame_21.png frame_22.png frame_23.png frame_24.png frame_25.png frame_26.png frame_27.png frame_28.png frame_29.png frame_30.png frame_31.png frame_32.png frame_33.png frame_34.png frame_35.png frame_36.png frame_37.png frame_38.png frame_39.png frame_40.png frame_41.png frame_42.png frame_43.png frame_44.png frame_45.png frame_46.png frame_47.png frame_48.png frame_49.png frame_50.png frame_51.png frame_52.png frame_53.png frame_54.png frame_55.png frame_56.png frame_57.png frame_58.png frame_59.png frame_60.png frame_61.png frame_62.png frame_63.png frame_64.png frame_65.png frame_66.png frame_67.png frame_68.png frame_69.png frame_70.png frame_71.png frame_72.png frame_73.png frame_74.png frame_75.png frame_76.png frame_77.png frame_78.png frame_79.png frame_80.png frame_81.png frame_82.png frame_83.png frame_84.png frame_85.png frame_86.png frame_87.png frame_88.png frame_89.png frame_90.png frame_91.png frame_92.png frame_93.png frame_94.png frame_95.png frame_96.png frame_97.png frame_98.png frame_99.png frame_100.png frame_101.png frame_102.png frame_103.png frame_104.png frame_105.png frame_106.png frame_107.png frame_108.png frame_109.png frame_110.png frame_111.png frame_112.png frame_113.png  cube.mpg
+
+part1: part3 part4
+
+part2: part5 part6
+
+part3: part7 part8
+
+part4: part9 part10
+
+part5: part11 part12
+
+part6: part13 part14
+
+part7: frame_1.png frame_2.png frame_3.png frame_4.png frame_5.png frame_6.png frame_7.png frame_8.png frame_9.png frame_10.png frame_11.png frame_12.png frame_13.png frame_14.png frame_15.png
+
+part8: frame_16.png  frame_17.png  frame_18.png  frame_19.png  frame_20.png  frame_21.png  frame_22.png  frame_23.png  frame_24.png  frame_25.png  frame_26.png  frame_27.png  frame_28.png  frame_29.png  
+
+part9: frame_30.png frame_31.png frame_32.png frame_33.png frame_34.png frame_35.png frame_36.png frame_37.png frame_38.png frame_39.png frame_40.png frame_41.png frame_42.png frame_43.png 
+
+part10: frame_44.png frame_45.png frame_46.png frame_47.png frame_48.png frame_49.png frame_50.png frame_51.png frame_52.png frame_53.png frame_54.png frame_55.png frame_56.png frame_57.png 
+
+part11: frame_58.png frame_59.png frame_60.png frame_61.png frame_62.png frame_63.png frame_64.png frame_65.png frame_66.png frame_67.png frame_68.png frame_69.png frame_70.png frame_71.png 
+
+part12: frame_72.png frame_73.png frame_74.png frame_75.png frame_76.png frame_77.png frame_78.png frame_79.png frame_80.png frame_81.png frame_82.png frame_83.png frame_84.png frame_85.png 
+
+part13:  frame_86.png frame_87.png frame_88.png frame_89.png frame_90.png frame_91.png frame_92.png frame_93.png frame_94.png frame_95.png frame_96.png frame_97.png frame_98.png frame_99.png 
+
+part14: frame_100.png frame_101.png frame_102.png frame_103.png frame_104.png frame_105.png frame_106.png frame_107.png frame_108.png frame_109.png frame_110.png frame_111.png frame_112.png frame_113.png 
 
 frame_1.png : cube_anim.blend
 		blender -b cube_anim.blend -o //frame_# -F PNG -x 1 -f 1
@@ -340,6 +368,6 @@ frame_112.png : cube_anim.blend
 frame_113.png : cube_anim.blend
 		blender -b cube_anim.blend -o //frame_# -F PNG -x 1 -f 113
 
-cube_anim.blend : cube_anim.zip
+cube_anim.blend : 
 		rm cube_anim.blend ; unzip cube_anim.zip
 
