@@ -16,7 +16,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import com.developpez.adiguba.shell.ProcessConsumer;
 import com.developpez.adiguba.shell.Shell;
 
 public class MakeMeMake {
@@ -135,32 +134,16 @@ public class MakeMeMake {
 					System.out.println("Reception fichier #" + (i + 1) + "/"
 							+ nbFiles);
 					String fileLine = receiveFromServer.readLine();
-					int j = 0;
-					System.out.println(j);j++;
 					posComma = fileLine.indexOf(",");
-					System.out.println("posComma = "+posComma);
-					System.out.println(j);j++;
 					boolean isExecutable = Boolean.parseBoolean(fileLine.substring(0, posComma));
-					System.out.println(j);j++;
 					String subFileLine = fileLine.substring(posComma + 1, fileLine.length());
-					System.out.println("fileLine = "+fileLine);
-					System.out.println("subFileLine = "+subFileLine);j++;
 					posComma = subFileLine.indexOf(",");
-					System.out.println(j);j++;
-					System.out.println("posComma = "+posComma);
 					String fileSize = subFileLine.substring(0, posComma);
-					System.out.println("fileSize="+fileSize);j++;
 					String fileName = subFileLine.substring(posComma + 1,
 							subFileLine.length());
-					System.out.println("fileName="+fileSize);j++;
 					int intFileSize = 0;
-					try {
-						intFileSize = Integer.valueOf(fileSize);
-					} catch (NumberFormatException e) {
-						throw e;
-					}
-					System.out.println("\tFileName = " + fileName
-							+ ", FileSize = " + fileSize + ".");
+					intFileSize = Integer.valueOf(fileSize);
+					
 					byte[] temp = new byte[intFileSize];
 
 					System.out.println("\tReception en cours");
