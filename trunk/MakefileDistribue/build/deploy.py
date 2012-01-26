@@ -45,11 +45,12 @@ class RunCommand(cmd.Cmd):
         Execute this command on all hosts in the list"""
         if command:
             for host, conn in zip(self.hosts, self.connections):
-               	stdin, stdout, stderr =  conn.exec_command(command)
+		conn.exec_command(command)
+               	"""stdin, stdout, stderr =  
                	stdin.close()
                 for line in stdout.read().splitlines():
                     print 'host: %s: %s' % (host[0], line)
-		""""""
+		"""
         else:
             print "usage: run <command>"
  
