@@ -13,11 +13,12 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 			
-		String operation = "gcc -o hello.o -c hello.c -W -Wall -ansi -pedantic";
+		String operation = "touch LOOL";
 		Shell sh = new Shell();
+		sh.setDirectory(new File("/tmp"));
 		try {
 			ProcessConsumer result = sh.command(operation);
-			System.out.println(result.error().consume());
+			System.out.println(result.consumeAsString());
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

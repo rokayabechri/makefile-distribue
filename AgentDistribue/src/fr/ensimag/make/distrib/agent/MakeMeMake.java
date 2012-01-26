@@ -82,7 +82,7 @@ public class MakeMeMake {
 					}
 				}
 			}
-			Thread.sleep(100);
+			break;
 		}
 	}
 
