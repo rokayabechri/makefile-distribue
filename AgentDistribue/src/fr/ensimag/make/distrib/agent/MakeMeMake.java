@@ -169,7 +169,7 @@ public class MakeMeMake {
 					fos.close();
 					
 					if (isExecutable) {
-						File f = new File(fileName);
+						File f = new File("/tmp/"+fileName);
 						f.setExecutable(true);
 					}
 					sendToServer.println("OK4");
