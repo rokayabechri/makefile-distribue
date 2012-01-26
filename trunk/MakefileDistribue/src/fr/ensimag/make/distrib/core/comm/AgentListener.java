@@ -139,8 +139,15 @@ public class AgentListener extends Thread implements Runnable {
 
 					bos.write(temp, 0, current);
 					bos.flush();
+					bos.close();
+					fos.close();
+					
+					Thread.sleep(100);
 					agent.sendToAgent.println("OK2");
 					String end = agent.receiveFromAgent.readLine();
+					if (end == null) {
+						throw new Exception();
+					}
 					System.out.println(">>>> " + agentListenerPrefix
 							+ " DONE target=" + end);
 
