@@ -150,7 +150,7 @@ public class MakeMeMake {
 					sendToServer.println("OK3");
 					InputStream is = socket.getInputStream();
 
-					FileOutputStream fos = new FileOutputStream(fileName);
+					FileOutputStream fos = new FileOutputStream("/tmp/"+fileName);
 					BufferedOutputStream bos = new BufferedOutputStream(fos);
 					int bytesRead = is.read(temp, 0, temp.length);
 					int current = bytesRead;
@@ -179,6 +179,7 @@ public class MakeMeMake {
 				System.out.println("Execution commande");
 				System.out.println("<<<<>>>>");
 				Shell sh = new Shell();
+				sh.setDirectory(new File("/tmp"));
 				int retVal = sh.command(operation).error().consume();
 				System.out.println(retVal);
 				if (retVal != 0) {
@@ -192,7 +193,7 @@ public class MakeMeMake {
 				// r�cup�ration nom cible
 				String targetName = receiveFromServer.readLine();
 
-				File myFile = new File("./" + targetName);
+				File myFile = new File("/tmp/" + targetName);
 				byte[] fileAsByteArray = new byte[(int) myFile.length()];
 
 				sendToServer.println(myFile.length() + "," + myFile.getName());
