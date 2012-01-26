@@ -163,6 +163,8 @@ public class MakeMeMake {
 					bos.write(temp, 0, current);
 					bos.flush();
 					bos.close();
+					fos.close();
+					
 					if (isExecutable) {
 						File f = new File(fileName);
 						f.setExecutable(true);
@@ -205,7 +207,10 @@ public class MakeMeMake {
 				System.out.println("Envoie resultat...");
 				os.write(fileAsByteArray, 0, fileAsByteArray.length);
 				os.flush();
-				// os.close();
+				
+				bis.close();
+				fis.close();
+				
 				String ok2 = receiveFromServer.readLine();
 				if (!ok2.equals("OK2"))
 					throw new Exception("Not OK2");
