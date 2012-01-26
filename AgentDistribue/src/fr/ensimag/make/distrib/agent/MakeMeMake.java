@@ -26,6 +26,7 @@ public class MakeMeMake {
 	static private PrintWriter sendToServer;
 
 	static public void main(String[] args) throws Exception {
+		System.out.println("JarID = "+ jarId);
 		Boolean avoid = false;
 		Integer port = 0;
 		if (args == null || args.length < 1) {
@@ -46,7 +47,7 @@ public class MakeMeMake {
 		while (true) {
 			if (!avoid) {
 				System.out.println("Connexion en cours...");
-				System.out.println("JarID = "+jarId);
+				System.out.println("JarID = "+ jarId);
 				connect(args[0], port);
 
 				if (socket != null) {
