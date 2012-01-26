@@ -20,6 +20,7 @@ import com.developpez.adiguba.shell.Shell;
 
 public class MakeMeMake {
 	static private String aide = "Usage : java MakeMeMake @serveur portServeur\n\tPr�cisez l'adresse de la machine distante";
+	static private String jarId = "LastJar rev 89";
 	static private Socket socket = null;
 	static private BufferedReader receiveFromServer;
 	static private PrintWriter sendToServer;
@@ -45,6 +46,7 @@ public class MakeMeMake {
 		while (true) {
 			if (!avoid) {
 				System.out.println("Connexion en cours...");
+				System.out.println("JarID = "+jarId);
 				connect(args[0], port);
 
 				if (socket != null) {
