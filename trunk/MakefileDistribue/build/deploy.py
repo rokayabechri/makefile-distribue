@@ -45,7 +45,7 @@ class RunCommand(cmd.Cmd):
         Execute this command on all hosts in the list"""
         if command:
             for host, conn in zip(self.hosts, self.connections):
-		conn.exec_command(command)
+                conn.exec_command(command)
                	"""stdin, stdout, stderr =  
                	stdin.close()
                 for line in stdout.read().splitlines():
